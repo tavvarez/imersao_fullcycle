@@ -13,7 +13,7 @@ func NewInvestor(id string) *Investor {
 	}	
 }
 
-func (*i Investor) AddAssetPosition(assetPosition *InvestorAssetsPosition) {
+func (i *Investor) AddAssetPosition(assetPosition *InvestorAssetsPosition) {
 	i.AssetPosition = append(i.AssetsPosition, assetPosition)
 }
 

@@ -29,6 +29,5 @@ func (oq *OrderQueue) Pop() interface{} {
 }
 
 func NewOrderQueue() *OrderQueue {
-	return &OrderQueue{},
+	return &OrderQueue{}
 }
-
