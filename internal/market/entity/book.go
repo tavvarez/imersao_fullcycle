@@ -66,3 +66,27 @@ func (b *Book) Trade() {
 		}
 	}
 }
+
+func (b *Book) AddTransaction(transaction *Transaction, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	sellingShares := transaction.SellingOrder.PendingShares
+	buyingShares := transaction.BuyingOrder.PendingShares
+
+	minShares := sellingShares
+	if buyingShares < minShares {
+		minShares = buyingShares
+	}
+
+	transaction.SellingOrder.Investor.UpdateAssetPosition(transaction.SellingOrder.Asset.ID, -minShares)
+	transaction.AddSellOrderPendingShares(-minShares)
+	
+	transaction.BuyingOrder.Investor.UpdateAssetPosition(transaction.BuyingOrder.Asset.ID, minShares)
+	transaction.AddBuyOrderPendingShares(-minShares)
+	
+	transaction.CalculateTotal(transaction.Shares, transaction.BuyingOrder.Price)
+
+	transaction.CloseBuyOrder()
+	transaction.CloseSellOrder()
+	b.Transactions = append(b.Transactions, transaction)
+}
