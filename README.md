@@ -6,6 +6,6 @@
 ### Tecnologias
 ### - Docker
 ### - Next.js
-### - Nest.js
+### - Nest.js S
 ### - Apache Kafka
 ### - GoLang
